@@ -12,20 +12,19 @@
 
 \section{Background}
 Last semester, we designed and implemented Felix: a system which measures
-network traffic using NetKAT. Felix's query language and query compilation
-design were complete, and a paper on Felix was accepted to SOSR. However,
-both Felix and the SOSR submission were imperfect. First, Felix's query
-compiler was slow for large inputs and would often crash on \emph{very} large
-inputs. Second, the Felix compiler was not integrated with Haoxian's runtime
-which made it onerous to run Felix end-to-end. Finally, our SOSR submission was
-written hurriedly and submitted last minute\footnote{literally!}, leaving the
-paper a bit incohesive.
+network traffic using NetKAT. The design of Felix's query language and
+compilation algorithm was complete, and a paper on Felix was accepted to SOSR.
+However, both Felix and the SOSR submission were imperfect. Felix's query
+compiler was slow when run on large inputs and would often crash when run on
+\emph{very} large inputs. The Felix compiler was not integrated with Haoxian's
+runtime which made it onerous to run Felix end-to-end. Finally, our SOSR
+submission was written hurriedly and submitted last
+minute\footnote{literally!}, leaving the paper a bit incohesive.
 
 \section{Getting Felix Camera-Ready}
 The bulk of this semester was spent fixing these imperfections. We optimized
 the Felix compiler, integrated the compiler with the runtime, conducted new
-benchmarks and case studies, revised the paper, and ultimately presented Felix
-at SOSR!
+case studies, revised the paper, and ultimately presented Felix at SOSR!
 
 \subsection{Optimization}
 \paragraph{Hashconsing}
@@ -41,37 +40,39 @@ Moreover, we replaced the \netauto{} implementation of hashconsing with an
 implementation}.
 
 \paragraph{CPS}
-Our SOSR submission included some Felix benchmarks run against every topology
-in the Topology Zoo. Well, almost. A footnote in the paper explained that Felix
-crashed on a few of the larger topology. After some debugging, we found that a
-certain recursive function was overflowing the stack. We rewrote the function
-using CPS and were then able to run on all of Topology Zoo!
+Our SOSR submission included some Felix benchmarks that were run against
+\emph{every} topology in the Topology Zoo. Well, almost every. A footnote in
+the paper explained that Felix crashed on a few of the larger topology. After
+some debugging, we found that a certain recursive function was overflowing the
+stack. We rewrote the function using CPS and were then able to run on all of
+Topology Zoo!
 
 \paragraph{Predicate Splitting}
-In our benchmarks against the topology zoo, we assumed each topology was
-implemented with a simple destination-based shortest path routing policy. The
-path each packet took was determined completely by its source and destination.
-We exploited the simplicity of the forwarding policy to improve compile times.
-Given a forwarding policy $p$ and a network with $n$ hosts, we partitioned $p$
-into a $n$ sub-policies $p_1, \ldots, p_n$ where $p_i$ included only the
-forwarding rules forwarding to host $i$. We then compiled each sub-policy
-separately before combining the results.
+In our benchmarks, we assumed that each topology was implemented with a simple
+destination-based shortest path routing policy: the path each packet took was
+determined completely by its source and destination.  We exploited the
+simplicity of the forwarding policy to improve compile times.  Given a
+forwarding policy $p$ and a network with $n$ hosts, we partitioned $p$ into a
+$n$ sub-policies $p_1, \ldots, p_n$ where $p_i$ included only the forwarding
+rules forwarding to host $i$. We then compiled each sub-policy separately
+before combining the results.
 
 After implementing these optimizations, the query compiler ran between 10 and
-100 times faster! The compilation time for some queries and topologies was
-reduced from hours to minutes.
+100 times faster! The time to compile some queries and topologies was reduced
+from hours to minutes.
 
 \subsection{Integration}
 We integrated our query compiler with Haoxian's end-host measurement system.
-The compiler outputs the set of $(\alpha, \beta)$ pairs read from the E-matrix.
-We converted these pairs into configurations for the end-host monitors. We
-worked with Haoxian to extend the end-host measurement system to allow packet
-tagging. To tag packets, we assigned each $\alpha$ a unique identifier to tag
-packets that matched $\alpha$. For each $(\alpha, \beta)$ pair, we configured
-all end hosts to count a received packet if it matched $\beta$ and was tagged
-with the identifier corresponding to $\alpha$.  We were also able to use this
-system to generate traffic matrices since Haoxian's measurement system already
-supported keeping track of counts of source-destination pairs.
+The compiler outputed the set of $(\alpha, \beta)$ pairs read from the
+E-matrix.  We converted these pairs into configurations for the end-host
+monitors. We worked with Haoxian to extend the end-host measurement system to
+allow packet tagging. To tag packets, we assigned each $\alpha$ a unique
+identifier to tag packets that matched $\alpha$. For each $(\alpha, \beta)$
+pair, we configured all end hosts to count a received packet if it matched
+$\beta$ and was tagged with the identifier corresponding to $\alpha$.  We were
+also able to use this system to generate traffic matrices since Haoxian's
+measurement system already supported keeping track of counts of
+source-destination pairs.
 
 \subsection{Experimentation}
 After we integrated the compiler and runtime, we were able to design and
@@ -94,7 +95,7 @@ presentation at SOSR.
 The ideas underlying the frenetic, \netauto{}, and Felix code bases are cut
 from the same cloth, but the code itself is very fragmented. The \netauto{}
 repository implements its own type for NetKAT terms, its own lexer and parser,
-its own FDDs, and its own REPL. Felix is fork of the \netauto{} code and
+its own FDDs, and its own REPL. Felix is a fork of the \netauto{} code and
 introduces yet another set of terms (i.e. queries) and a new REPL. Living
 outside the main frenetic repository, both the \netauto{} and Felix code are
 also seldom built and the students who have worked on them have mostly
@@ -116,8 +117,8 @@ repository. We will work on this over the summer.
     implementation of FDDs.
   \item
     We need to replace the \netauto{} implementation of NetKAT terms with the
-    frenetic implementation or translate between the two. This will also
-    involve merging the lexer and parsers.
+    frenetic implementation, or translate between the two. This will also
+    involve merging the lexers and parsers.
   \item
     We need to polish the frenetic shell to make it easy to run the NetKAT
     decision procedure and Felix compiler.
@@ -128,7 +129,7 @@ The implementation of FDDs in the current \netauto{} code has a peculiar bug in
 which a unicode snowman is printed. The dreaded snowman was hardcoded to
 indicate that something in the code has gone wrong. We have plans to fix this
 bug, but the snowman code may be deleted entirely when we finish integrating
-the \netauto{} code into the frenetic repo.
+the \netauto{} code into the frenetic repository.
 
 \paragraph{Research Directions}
 Moving forward, there are a handful of research topics we have discussed over
@@ -140,7 +141,7 @@ each switch recorded each and every packet that it processed, how it was
 modified, and where it was forwarded, we could easily verify the behavior of
 the network. Of course, this solution is a bit heavy handed. What is the
 minimal amount of instrumentation or network functionality needed to check that
-the network is behaving correctly. One conjecture was that per-link packet
+the network is behaving correctly? One conjecture was that per-link packet
 counts would suffice. Other research directions are outlined in the conclusion
-of the paper.
+of our SOSR paper.
 \end{document}
