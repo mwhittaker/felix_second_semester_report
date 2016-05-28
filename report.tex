@@ -128,9 +128,16 @@ bug, but the snowman code may be deleted entirely when we finish integrating
 the \netauto{} code into the frenetic repo.
 
 \paragraph{Research Directions}
-% finish integrating code
-% snowman
-% ???; whoever was at these meetings:
-%   - detecting cycles and black holes
-%   - checking counts with minimal instrumentation
+Moving forward, there are a handful of research topics we have discussed over
+the year that remain unanswered. Most notably, Felix assumes the network
+behaves exactly as specified by its forwarding policy. Felix is oblivious to
+network misbehavior. However, it may be possible to leverage Felix to
+dynamically verify that the network is behaving as specified. For example, if
+each switch recorded each and every packet that it processed, how it was
+modified, and where it was forwarded, we could easily verify the behavior of
+the network. Of course, this solution is a bit heavy handed. What is the
+minimal amount of instrumentation or network functionality needed to check that
+the network is behaving correctly. One conjecture was that per-link packet
+counts would suffice. Other research directions are outlined in the conclusion
+of the paper.
 \end{document}
