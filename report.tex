@@ -1,3 +1,5 @@
+\newcommand{\netauto}{\texttt{netkat-automata}}
+
 \section{Background}
 Last semester, we designed and implemented Felix: a system which measures
 network traffic using NetKAT. Felix's query language and query compilation
@@ -16,7 +18,6 @@ benchmarks and case studies, revised the paper, and ultimately presented Felix
 at SOSR!
 
 \subsection{Optimization}
-\newcommand{\netauto}{\texttt{netkat-automata}}
 \paragraph{Hashconsing}
 The Felix compiler uses the FDD implementation in the \netauto{} repository
 which hashconses NetKAT terms to avoid redundant storage and computation.
@@ -68,7 +69,20 @@ presentation at SOSR.
 %   - checking counts with minimal instrumentation
 
 \section{Integrating Code}
-% michael
+The ideas underlying the frenetic, \netauto{}, and Felix code bases are cut
+from the same cloth, but the code itself is very fragmented. The \netauto{}
+repository implements its own type for NetKAT terms, its own lexer and parser,
+its own FDDs, and its own REPL. Felix is fork of the \netauto{} code and
+introduces yet another set of terms (i.e. queries) and a new REPL. Living
+outside the main frenetic repository, both the \netauto{} and Felix code are
+also seldom built and the students who have worked on them have mostly
+graduated or are graduating.
+
+We have begun integrating the \netauto{} and Felix code into the main frenetic
+codebase. All the code has been plopped into the main repository and integrated
+with its build system. Deprecated and abandoned files have been deleted. Most
+notably, the frenetic and \netauto{} REPLs have been discarded, and the main
+frenetic shell can now invoke both Felix and the NetKAT decision procedure.
 
 \section{Future Work}
 % finish integrating code
