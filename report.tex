@@ -63,11 +63,6 @@ After a semester or so of designing, implementing, and polishing Felix, we were
 able to proudly show off our work! We prepared and presented a 25 minute
 presentation at SOSR.
 
-\section{Budding Ideas}
-% ???; whoever was at these meetings:
-%   - detecting cycles and black holes
-%   - checking counts with minimal instrumentation
-
 \section{Integrating Code}
 The ideas underlying the frenetic, \netauto{}, and Felix code bases are cut
 from the same cloth, but the code itself is very fragmented. The \netauto{}
@@ -85,5 +80,32 @@ notably, the frenetic and \netauto{} REPLs have been discarded, and the main
 frenetic shell can now invoke both Felix and the NetKAT decision procedure.
 
 \section{Future Work}
+\paragraph{Finishing Integration}
+There a few major steps left in integrating all the code into the main frenetic
+repository. We will work on this over the summer.
+\begin{itemize}
+  \item
+    We need to replace the \netauto{} implementation of FDDs with the frenetic
+    implementation of FDDs.
+  \item
+    We need to replace the \netauto{} implementation of NetKAT terms with the
+    frenetic implementation or translate between the two. This will also
+    involve merging the lexer and parsers.
+  \item
+    We need to polish the frenetic shell to make it easy to run the NetKAT
+    decision procedure and Felix compiler.
+\end{itemize}
+
+\paragraph{An Abominable Snowman}
+The implementation of FDDs in the current \netauto{} code has a peculiar bug in
+which a unicode snowman is printed. The dreaded snowman was hardcoded to
+indicate that something in the code has gone wrong. We have plans to fix this
+bug, but the snowman code may be deleted entirely when we finish integrating
+the \netauto{} code into the frenetic repo.
+
+\paragraph{Research Directions}
 % finish integrating code
 % snowman
+% ???; whoever was at these meetings:
+%   - detecting cycles and black holes
+%   - checking counts with minimal instrumentation
