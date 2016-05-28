@@ -2,7 +2,10 @@
 \title{Research Report}
 \author{Brandon, Jake, Michael, Rene}
 
+\usepackage{xcolor}
+
 \newcommand{\netauto}{\texttt{netkat-automata}}
+\newcommand{\niceref}[2]{\underline{\textcolor{blue}{\href{#1}{#2}}}}
 
 \begin{document}
 \maketitle
@@ -34,8 +37,8 @@ the hash of all of its subterms! When compiling against very large topologies,
 this became a bottleneck. We refactored the code to take advantage of
 hashconsing which improved the performance of the compiler considerably.
 Moreover, we replaced the \netauto{} implementation of hashconsing with an
-optimized library implementation.
-% https://github.com/backtracking/ocaml-hashcons
+\niceref{https://github.com/backtracking/ocaml-hashcons}{optimized library
+implementation}.
 
 \paragraph{CPS}
 Our SOSR submission included some Felix benchmarks run against every topology
