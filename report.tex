@@ -15,12 +15,31 @@ the Felix compiler, integrated the compiler with the runtime, conducted new
 benchmarks and case studies, revised the paper, and ultimately presented Felix
 at SOSR!
 
-\paragraph{Optimization}
-% michael: hashconsing
-% michael: CPS to prevent crashing
+\subsection{Optimization}
+\newcommand{\netauto}{\texttt{netkat-automata}}
+\paragraph{Hashconsing}
+The Felix compiler uses the FDD implementation in the \netauto{} repository
+which hashconses NetKAT terms to avoid redundant storage and computation.
+However, a couple of performance critical pieces of code did not take advantage
+of the hashconsing. Notably, the computation of a term's hash was recomputing
+the hash of all of its subterms! When compiling against very large topologies,
+this became a bottleneck. We refactored the code to take advantage of
+hashconsing which improved the performance of the compiler considerably.
+Moreover, we replaced the \netauto{} implementation of hashconsing with an
+optimized library implementation.
+% https://github.com/backtracking/ocaml-hashcons
+
+\paragraph{CPS}
+Our SOSR submission included some Felix benchmarks run against every topology
+in the Topology Zoo. Well, almost. A footnote in the paper explained that Felix
+crashed on a few of the larger topology. After some debugging, we found that a
+certain recursive function was overflowing the stack. We rewrote the function
+using CPS and were then able to run on all of Topology Zoo!
+
+\paragraph{Predicate Splitting}
 % rene:    splitting up predicates and compiling them separately
 
-\paragraph{Integration}
+\subsection{Integration}
 % brandon + jake: integrating with Haoxian
 We integrated our query language compiler with Haoxian's end-host measurement
 system. The query language compiler output an E-matrix of $(\alpha, \beta)$
@@ -33,13 +52,13 @@ with the identifier corresponding to $\alpha$.  We were also able to use this
 system to generate traffic matrices since Haoxian's measurement system already
 supported keeping track of counts of source-destination pairs.
 
-\paragraph{Experimentation}
+\subsection{Experimentation}
 % ?: talk about all the benchmarks and integration and stuff we did
 
-\paragraph{Revision}
+\subsection{Revision}
 % anyone: talk about how we rewrote the paper, but mention it was mostly nate
 
-\paragraph{Presentation}
+\subsection{Presentation}
 % michael
 
 \section{Budding Ideas}
