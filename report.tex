@@ -45,7 +45,18 @@ certain recursive function was overflowing the stack. We rewrote the function
 using CPS and were then able to run on all of Topology Zoo!
 
 \paragraph{Predicate Splitting}
-% rene:    splitting up predicates and compiling them separately
+In our benchmarks against the topology zoo, we assumed each topology was
+implemented with a simple destination-based shortest path routing policy. The
+path each packet took was determined completely by its source and destination.
+We exploited the simplicity of the forwarding policy to improve compile times.
+Given a forwarding policy $p$ and a network with $n$ hosts, we partitioned $p$
+into a $n$ sub-policies $p_1, \ldots, p_n$ where $p_i$ included only the
+forwarding rules forwarding to host $i$. We then compiled each sub-policy
+separately before combining the results.
+
+After implementing these optimizations, the query compiler ran between 10 and
+100 times faster! The compilation time for some queries and topologies was
+reduced from hours to minutes.
 
 \subsection{Integration}
 We integrated our query language compiler with Haoxian's end-host measurement
