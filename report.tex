@@ -59,9 +59,9 @@ After implementing these optimizations, the query compiler ran between 10 and
 reduced from hours to minutes.
 
 \subsection{Integration}
-We integrated our query language compiler with Haoxian's end-host measurement
-system. The query language compiler output an E-matrix of $(\alpha, \beta)$
-pairs. We converted these pairs to configurations for the end-host monitors. We
+We integrated our query compiler with Haoxian's end-host measurement system.
+The compiler outputs the set of $(\alpha, \beta)$ pairs read from the E-matrix.
+We converted these pairs into configurations for the end-host monitors. We
 worked with Haoxian to extend the end-host measurement system to allow packet
 tagging. To tag packets, we assigned each $\alpha$ a unique identifier to tag
 packets that matched $\alpha$. For each $(\alpha, \beta)$ pair, we configured
@@ -71,10 +71,16 @@ system to generate traffic matrices since Haoxian's measurement system already
 supported keeping track of counts of source-destination pairs.
 
 \subsection{Experimentation}
-% ?: talk about all the benchmarks and integration and stuff we did
+After we integrated the compiler and runtime, we were able to design and
+conduct two new case studies. Using mininet and iperf to virtualize networks
+and synthesize traffic, we generated traffic matrices over the ARPANet topology
+and dissected a more complex traffic pattern over the Abilene topology. We also
+re-ran our original benchmarks with the newly optimized code.
 
 \subsection{Revision}
-% anyone: talk about how we rewrote the paper, but mention it was mostly nate
+In addition to revising and benchmarking Felix's implementation, we also
+wrestled our SOSR submission into camera-ready form. Though, we can't take too
+much credit for this; Nate did most of the heavy lifting!
 
 \subsection{Presentation}
 After a semester or so of designing, implementing, and polishing Felix, we were
